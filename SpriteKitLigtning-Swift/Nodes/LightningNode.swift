@@ -45,14 +45,17 @@ class LightningNode: SKSpriteNode {
     // MARK: - Touches
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touch = touches.first else {
-            return
+//        guard let touch = touches.first else {
+//            return
+//        }
+        for touch in touches{
+            let locationInNode = touch.location(in: self)
+            
+            self.targetPoints.removeAll(keepingCapacity: false)
+            self.targetPoints.append(locationInNode)
+            self.startLightning(locationInNode)
         }
-        let locationInNode = touch.location(in: self)
         
-        self.targetPoints.removeAll(keepingCapacity: false)
-        self.targetPoints.append(locationInNode)
-        self.startLightning()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -71,12 +74,14 @@ class LightningNode: SKSpriteNode {
     
     // MARK: Lightning operating
     
-    func startLightning() {
+    func startLightning(_ startPoint:CGPoint) {
         let wait = SKAction.wait(forDuration: timeBetweenBolts)
         let addLightning = SKAction.run { () -> Void in
-            let startPoint = CGPoint(x:self.frame.midX, y:self.frame.midY)
-            for targetPoint in self.targetPoints {
-                self.addBolt(startPoint: startPoint, endPoint: targetPoint)
+//            let startPoint = CGPoint(x:self.frame.midX, y:self.frame.midY)
+            for _ in 0...1{
+                for targetPoint in self.targetPoints {
+                    self.addBolt(startPoint: startPoint, endPoint: targetPoint)
+                }
             }
         }
         
