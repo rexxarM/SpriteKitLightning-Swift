@@ -14,10 +14,15 @@ class LightningLineNode: SKNode {
     var endPoint = CGPoint.zero
     let thickness = 1.3
     
+    var color = UIColor.blue
+    
+    var colorFactor:CGFloat = 1.0
+    
     init(startPoint: CGPoint, endPoint: CGPoint) {
         super.init()
         self.startPoint = startPoint
         self.endPoint = endPoint
+        self.isUserInteractionEnabled = false
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -60,5 +65,15 @@ class LightningLineNode: SKNode {
         self.addChild(halfCircleA)
         self.addChild(halfCircleB)
         self.addChild(lightningSegment)
+        applyColor()
+    }
+    
+    func applyColor(){
+        for child in children{
+            if let sk = child as? SKSpriteNode{
+                sk.colorBlendFactor = colorFactor
+                sk.color = color
+            }
+        }
     }
 }
