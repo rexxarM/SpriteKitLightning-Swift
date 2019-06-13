@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B6A018722B222B00009D940 /* outlighting.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 5B6A018622B222B00009D940 /* outlighting.fsh */; };
+		5B6A018922B225DE0009D940 /* ShaderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6A018822B225DE0009D940 /* ShaderExtension.swift */; };
 		960D44581A04FF7600979801 /* shock1.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 960D44521A04FF7600979801 /* shock1.aiff */; };
 		960D44591A04FF7600979801 /* shock2.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 960D44531A04FF7600979801 /* shock2.aiff */; };
 		960D445A1A04FF7600979801 /* shock3.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 960D44541A04FF7600979801 /* shock3.aiff */; };
@@ -37,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B6A018622B222B00009D940 /* outlighting.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = outlighting.fsh; sourceTree = "<group>"; };
+		5B6A018822B225DE0009D940 /* ShaderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShaderExtension.swift; sourceTree = "<group>"; };
 		960D44521A04FF7600979801 /* shock1.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = shock1.aiff; sourceTree = "<group>"; };
 		960D44531A04FF7600979801 /* shock2.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = shock2.aiff; sourceTree = "<group>"; };
 		960D44541A04FF7600979801 /* shock3.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = shock3.aiff; sourceTree = "<group>"; };
@@ -164,6 +168,8 @@
 				9648A95D19FF62AC007468EC /* LightningNode.swift */,
 				9648A95F19FF6CE7007468EC /* LightningBoltNode.swift */,
 				9648A96119FF834B007468EC /* LightningLineNode.swift */,
+				5B6A018622B222B00009D940 /* outlighting.fsh */,
+				5B6A018822B225DE0009D940 /* ShaderExtension.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -269,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9648A95A19FF627B007468EC /* GameScene.sks in Resources */,
+				5B6A018722B222B00009D940 /* outlighting.fsh in Resources */,
 				960D445F1A04FF8800979801 /* Images.xcassets in Resources */,
 				960D445A1A04FF7600979801 /* shock3.aiff in Resources */,
 				960D44591A04FF7600979801 /* shock2.aiff in Resources */,
@@ -298,6 +305,7 @@
 				9648A96219FF834B007468EC /* LightningLineNode.swift in Sources */,
 				9648A95E19FF62AC007468EC /* LightningNode.swift in Sources */,
 				9648A95B19FF627B007468EC /* GameScene.swift in Sources */,
+				5B6A018922B225DE0009D940 /* ShaderExtension.swift in Sources */,
 				9648A95C19FF627B007468EC /* GameViewController.swift in Sources */,
 				9648A93119FF5FBB007468EC /* AppDelegate.swift in Sources */,
 				9648A96019FF6CE7007468EC /* LightningBoltNode.swift in Sources */,
@@ -426,6 +434,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9S95QV6R8R;
 				INFOPLIST_FILE = "SpriteKitLigtning-Swift/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.SpriteKitLigtning-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -439,6 +448,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 9S95QV6R8R;
 				INFOPLIST_FILE = "SpriteKitLigtning-Swift/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.SpriteKitLigtning-Swift";
 				PRODUCT_NAME = "$(TARGET_NAME)";

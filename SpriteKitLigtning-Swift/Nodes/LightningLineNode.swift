@@ -73,6 +73,7 @@ class LightningLineNode: SKNode {
             if let sk = child as? SKSpriteNode{
                 sk.colorBlendFactor = colorFactor
                 sk.color = color
+                sk.shader = sShader
             }
         }
     }

@@ -12,19 +12,20 @@ import SpriteKit
 var sHalfCircle = SKTexture()
 var sLightningSegment = SKTexture()
 var sSoundActions = [SKAction]()
+var sShader = SKShader(fileNamed: "outlighting.fsh")
 var hasInit = false
 
 class LightningBoltNode: SKNode {
     
     var lifetime = 0.15
     var lineDrawDelay = 0.02
-    var displaceCoefficient = 0.25
+    var displaceCoefficient = 0.8
     var lineRangeCoefficient = 1.8
     var pathArray = [CGPoint]()
     
     init(startPoint: CGPoint, endPoint: CGPoint, lifetime: Double, lineDrawDelay: Double, displaceCoefficient: Double, lineRangeCoefficient: Double) {
         super.init()
-        
+        self.isUserInteractionEnabled = false
         self.lifetime = lifetime
         self.lineDrawDelay = lineDrawDelay
         self.displaceCoefficient = displaceCoefficient
@@ -64,6 +65,7 @@ class LightningBoltNode: SKNode {
     func addLineToBolt(startPoint: CGPoint, endPoint: CGPoint, delay: Double) {
         let line = LightningLineNode(startPoint: startPoint, endPoint: endPoint)
         self.addChild(line)
+        line.color = UIColor.red
         if (delay == 0) {
             line.draw()
         }

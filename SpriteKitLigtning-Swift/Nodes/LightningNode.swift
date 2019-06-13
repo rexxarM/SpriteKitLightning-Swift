@@ -23,7 +23,7 @@ class LightningNode: SKSpriteNode {
     let lineDrawDelay = 0.00175
     
     // 0.0 - the bolt will be a straight line. >1.0 - the bolt will look unnatural
-    let displaceCoefficient = 0.25
+    let displaceCoefficient = 0.3
     
     // Make bigger if you want bigger line lenght and vice versa
     let lineRangeCoefficient = 1.8

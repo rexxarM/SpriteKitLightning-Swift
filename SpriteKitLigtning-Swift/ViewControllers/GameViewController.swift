@@ -35,7 +35,7 @@ class GameViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.isMultipleTouchEnabled = true
         if let scene = GameScene.unarchiveFromFile(file: "GameScene") as? GameScene {
             // Configure the view.
             let skView = self.view as! SKView
