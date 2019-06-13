@@ -31,9 +31,9 @@ class LightningNode: SKSpriteNode {
     // MARK: - Life cycle
     
     init(size: CGSize) {
-        super.init(texture: nil, color: UIColor.clearColor(), size: size)
+        super.init(texture: nil, color: UIColor.clear, size: size)
         LightningBoltNode.loadSharedAssets()
-        self.userInteractionEnabled = true
+        self.isUserInteractionEnabled = true
         self.anchorPoint = CGPoint.zero
         self.size = size
     }
@@ -44,47 +44,47 @@ class LightningNode: SKSpriteNode {
     
     // MARK: - Touches
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
         }
-        let locationInNode = touch.locationInNode(self)
+        let locationInNode = touch.location(in: self)
         
-        self.targetPoints.removeAll(keepCapacity: false)
+        self.targetPoints.removeAll(keepingCapacity: false)
         self.targetPoints.append(locationInNode)
         self.startLightning()
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard let touch = touches.first else {
             return
         }
-        let locationInNode = touch.locationInNode(self)
+        let locationInNode = touch.location(in: self)
         
-        self.targetPoints.removeAll(keepCapacity: false)
+        self.targetPoints.removeAll(keepingCapacity: false)
         self.targetPoints.append(locationInNode)
     }
     
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.stopLightning()
     }
     
     // MARK: Lightning operating
     
     func startLightning() {
-        let wait = SKAction.waitForDuration(timeBetweenBolts)
-        let addLightning = SKAction.runBlock { () -> Void in
-            let startPoint = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
+        let wait = SKAction.wait(forDuration: timeBetweenBolts)
+        let addLightning = SKAction.run { () -> Void in
+            let startPoint = CGPoint(x:self.frame.midX, y:self.frame.midY)
             for targetPoint in self.targetPoints {
-                self.addBolt(startPoint, endPoint: targetPoint)
+                self.addBolt(startPoint: startPoint, endPoint: targetPoint)
             }
         }
         
-        self.runAction(SKAction.repeatActionForever(SKAction.sequence([addLightning, wait])), withKey: "lightning")
+        self.run(SKAction.repeatForever(SKAction.sequence([addLightning, wait])), withKey: "lightning")
     }
     
     func stopLightning() {
-        self.removeActionForKey("lightning")
+        self.removeAction(forKey: "lightning")
     }
     
     func addBolt(startPoint: CGPoint, endPoint: CGPoint) {

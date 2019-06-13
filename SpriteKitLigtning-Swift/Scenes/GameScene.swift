@@ -10,7 +10,7 @@ import SpriteKit
 
 class GameScene: SKScene {
     
-    override func didMoveToView(view: SKView) {        
+    override func didMove(to view: SKView) {
         let lightning = LightningNode(size: size)
         lightning.position = CGPoint.zero
         addChild(lightning)

@@ -9,11 +9,10 @@
 import Foundation
 import SpriteKit
 
-var kLoadSharedAssetsOnceToken: dispatch_once_t = 0
-
 var sHalfCircle = SKTexture()
 var sLightningSegment = SKTexture()
 var sSoundActions = [SKAction]()
+var hasInit = false
 
 class LightningBoltNode: SKNode {
     
@@ -25,13 +24,14 @@ class LightningBoltNode: SKNode {
     
     init(startPoint: CGPoint, endPoint: CGPoint, lifetime: Double, lineDrawDelay: Double, displaceCoefficient: Double, lineRangeCoefficient: Double) {
         super.init()
+        
         self.lifetime = lifetime
         self.lineDrawDelay = lineDrawDelay
         self.displaceCoefficient = displaceCoefficient
         self.lineRangeCoefficient = lineRangeCoefficient
-        self.drawBolt(startPoint, endPoint: endPoint)
-        let soundAction = sSoundActions[Int(arc4random_uniform(UInt32(sSoundActions.count)))]
-        self.runAction(soundAction)
+        self.drawBolt(startPoint: startPoint, endPoint: endPoint)
+//        let soundAction = sSoundActions[Int(arc4random_uniform(UInt32(sSoundActions.count)))]
+//        self.run(soundAction)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -49,15 +49,16 @@ class LightningBoltNode: SKNode {
         let displace = hypot*Float(self.displaceCoefficient)
         
         pathArray.append(startPoint)
-        self.createBolt(startPoint.x, y1: startPoint.y, x2: endPoint.x, y2: endPoint.y, displace: Double(displace))
+        self.createBolt(x1: startPoint.x, y1: startPoint.y, x2: endPoint.x, y2: endPoint.y, displace: Double(displace))
         
-        for var i = 0; i < pathArray.count - 1; i++ {
-            self.addLineToBolt(pathArray[i], endPoint: pathArray[i+1], delay: Double(i)*self.lineDrawDelay)
+        
+        for i in 0...pathArray.count-2{
+            self.addLineToBolt(startPoint: pathArray[i], endPoint: pathArray[i+1], delay: Double(i)*self.lineDrawDelay)
         }
         
         let waitDuration = Double(pathArray.count - 1)*self.lineDrawDelay + self.lifetime
-        let disappear = SKAction.sequence([SKAction.waitForDuration(waitDuration), SKAction.fadeOutWithDuration(0.25), SKAction.removeFromParent()])
-        self.runAction(disappear)
+        let disappear = SKAction.sequence([SKAction.wait(forDuration: waitDuration), SKAction.fadeOut(withDuration: 0.25), SKAction.removeFromParent()])
+        self.run(disappear)
     }
     
     func addLineToBolt(startPoint: CGPoint, endPoint: CGPoint, delay: Double) {
@@ -67,17 +68,17 @@ class LightningBoltNode: SKNode {
             line.draw()
         }
         else {
-            let delayAction = SKAction.waitForDuration(NSTimeInterval(delay))
-            let draw = SKAction.runBlock({ () -> Void in
+            let delayAction = SKAction.wait(forDuration: TimeInterval(delay))
+            let draw = SKAction.run({ () -> Void in
                 line.draw()
             })
-            line.runAction(SKAction.sequence([delayAction,draw]))
+            line.run(SKAction.sequence([delayAction,draw]))
         }
     }
     
     func createBolt(x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat, displace: Double) {
         if displace < self.lineRangeCoefficient {
-            let point = CGPointMake(x2, y2);
+            let point = CGPoint(x:x2, y:y2);
             self.pathArray.append(point)
         }
         else {
@@ -86,22 +87,16 @@ class LightningBoltNode: SKNode {
             mid_x += (Double(arc4random_uniform(100))*0.01-0.5)*displace;
             mid_y += (Double(arc4random_uniform(100))*0.01-0.5)*displace;
             let halfDisplace = displace*0.5
-            self.createBolt(x1, y1: y1, x2: CGFloat(mid_x), y2: CGFloat(mid_y), displace: halfDisplace)
-            self.createBolt(CGFloat(mid_x), y1: CGFloat(mid_y), x2: x2, y2: y2, displace: halfDisplace)
+            self.createBolt(x1: x1, y1: y1, x2: CGFloat(mid_x), y2: CGFloat(mid_y), displace: halfDisplace)
+            self.createBolt(x1: CGFloat(mid_x), y1: CGFloat(mid_y), x2: x2, y2: y2, displace: halfDisplace)
         }
     }
     
-    // MARK: Shared assets
-    
-    class func loadSharedAssets() {
-        dispatch_once(&kLoadSharedAssetsOnceToken) {
+    class func loadSharedAssets(){
+        if (!hasInit){
             sHalfCircle = SKTexture(imageNamed: "half_circle")
             sLightningSegment = SKTexture(imageNamed: "lightning_segment")
-            for var i = 1; i <= 6; i++ {
-                let soundFileName = "shock\(i).aiff"
-                let soundAction = SKAction.playSoundFileNamed(soundFileName, waitForCompletion: true)
-                sSoundActions.append(soundAction)
-            }
+            hasInit = true
         }
     }
     
